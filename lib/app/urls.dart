@@ -12,4 +12,10 @@ class Urls {
   static String createProfile = '$baseUrl/CreateProfile';
   static String listProductSlider = '$baseUrl/ListProductSlider';
   static String categoryList = '$baseUrl/CategoryList';
+
+  static  String productListByRemark(String remark) {
+    return '$baseUrl/ListProductByRemark/$remark';
+  }
 }
+
+

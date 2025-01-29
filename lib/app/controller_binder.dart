@@ -7,6 +7,7 @@ import 'package:crafty_bay/features/common/data/controllers/auth_controller.dart
 import 'package:crafty_bay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay/features/common/ui/controllers/main_bottom_nav_controller.dart';
 import 'package:crafty_bay/features/home/ui/controllers/banner_list_controller.dart';
+import 'package:crafty_bay/features/home/ui/controllers/populer_product_list_controller.dart';
 import 'package:get/get.dart';
 
 class ControllerBinder extends Bindings {
@@ -21,6 +22,7 @@ class ControllerBinder extends Bindings {
     Get.put(CompleteProfileController());
     Get.put(HomeBannerListController());
     Get.put(HomeCategoryListController());
+    Get.put(PopulerProductListController());
 
   }
  

@@ -24,7 +24,7 @@ class OTPVerificationController extends GetxController {
     _inProgress = true;
 
     update();
-
+    
     final NetworkResponse response =
         await Get.find<NetworkCaller>().getRequest(Urls.otpVerify(email, otp));
 
