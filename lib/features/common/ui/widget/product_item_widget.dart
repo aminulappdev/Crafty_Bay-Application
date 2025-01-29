@@ -1,12 +1,13 @@
 import 'package:crafty_bay/app/app_colors.dart';
+import 'package:crafty_bay/features/common/data/models/productModel.dart';
 import 'package:crafty_bay/features/product/ui/screen/product_datails_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductItemWidget extends StatelessWidget {
   const ProductItemWidget({
-    super.key,
+    super.key, required this.productModel,
   });
-
+  final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,28 +24,28 @@ class ProductItemWidget extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  // padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: AppColors.themecolor.withOpacity(0.14),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(16),
                         topRight: Radius.circular(16),
                       )),
-                  child: Image.asset(
-                    'assest/Images/shoes.png',
+                  child: Image.network(
+                    productModel.image ?? '',
                     width: 140, 
                     height: 90,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.scaleDown,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      const Text(
-                        'Nicke shoe latest addition',
+                       Text(
+                        productModel.title ?? '',
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w600, color: Colors.black54),
                       ),
                       const SizedBox(
@@ -53,22 +54,22 @@ class ProductItemWidget extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            '\$100',
-                            style: TextStyle(
+                           Text(
+                             productModel.price ?? '',
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.themecolor),
                           ),
-                          const Wrap(
+                           Wrap(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 color: Colors.amber,
                                 size: 18,
                               ),
                               Text(
-                                '4.5',
-                                style: TextStyle(
+                                 '${productModel.star ?? '0.0'}' ,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.themecolor),
                               ),

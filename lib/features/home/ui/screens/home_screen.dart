@@ -1,5 +1,9 @@
 import 'package:crafty_bay/app/asset_path.dart';
+import 'package:crafty_bay/features/common/data/models/productModel.dart';
 import 'package:crafty_bay/features/common/ui/widget/category_list_shimmer_widget.dart';
+import 'package:crafty_bay/features/common/ui/widget/product_item_shimmer_effect_widget.dart';
+import 'package:crafty_bay/features/home/ui/controllers/new_product_list_controller.dart';
+import 'package:crafty_bay/features/home/ui/controllers/populer_product_list_controller.dart';
 import 'package:crafty_bay/features/home/ui/widgets/carousel_simmer_widget.dart';
 import 'package:crafty_bay/features/common/data/models/category_model.dart';
 import 'package:crafty_bay/features/common/ui/controllers/category_list_controller.dart';
@@ -76,12 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Populer',
                 ontap: () {},
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: _getProductList(),
-                ),
-              ),
+              GetBuilder<PopulerProductListController>(builder: (controller) {            
+                if (controller.inProgress) {
+                  return const ProductItemShimmerEffectWidget();
+                }
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: _getProductList(controller.productList),
+                  ),
+                );
+              }),
               const SizedBox(
                 height: 8,
               ),
@@ -89,11 +98,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Spacial',
                 ontap: () {},
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: _getProductList(),
-                ),
+              GetBuilder<PopulerProductListController>(
+                builder: (controller) {
+                   if (controller.inProgress) {
+                  return const ProductItemShimmerEffectWidget();
+                }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: _getProductList(controller.productList),
+                    ),
+                  );
+                }
               ),
               const SizedBox(
                 height: 8,
@@ -102,11 +118,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'New',
                 ontap: () {},
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: _getProductList(),
-                ),
+              GetBuilder<NewProductListController>(
+                builder: (controller) {
+                   if (controller.inProgress) {
+                  return const ProductItemShimmerEffectWidget();
+                }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: _getProductList(controller.productList),
+                    ),
+                  );
+                }
               ),
             ],
           ),
@@ -128,15 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return categoryList;
   }
 
-  List<Widget> _getProductList() {
-    List<Widget> productList = [];
-    for (var i = 0; i < 10; i++) {
-      productList.add(const Padding(
-        padding: EdgeInsets.only(right: 8),
-        child: ProductItemWidget(),
+  List<Widget> _getProductList(List<ProductModel> productList) {
+    List<Widget> list = [];
+    for (var i = 0; i < productList.length; i++) {
+      list.add(Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ProductItemWidget(
+          productModel: productList[i],
+        ),
       ));
     }
-    return productList;
+    return list;
   }
 
   AppBar buildAppBar() {

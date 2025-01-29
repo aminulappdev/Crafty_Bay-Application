@@ -5,7 +5,7 @@ import 'package:crafty_bay/features/common/data/models/productModel.dart';
 import 'package:crafty_bay/features/common/data/models/product_list_model.dart';
 import 'package:get/get.dart';
 
-class PopulerProductListController extends GetxController {
+class SpecialProductListController extends GetxController {
   bool _inProgress = false;
   bool get inProgress => _inProgress;
 
@@ -21,7 +21,7 @@ class PopulerProductListController extends GetxController {
     _inProgress = true;
     update();
     final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(Urls.productListByRemark('Popular'));
+        await Get.find<NetworkCaller>().getRequest(Urls.productListByRemark('Special'));
     if (response.isSuccess) {
       _productListModel = ProductListModel.fromJson(response.responseData) ;
       isSuccess = true;

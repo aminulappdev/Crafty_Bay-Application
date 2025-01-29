@@ -5,7 +5,7 @@ import 'package:crafty_bay/features/common/data/models/productModel.dart';
 import 'package:crafty_bay/features/common/data/models/product_list_model.dart';
 import 'package:get/get.dart';
 
-class PopulerProductListController extends GetxController {
+class NewProductListController extends GetxController {
   bool _inProgress = false;
   bool get inProgress => _inProgress;
 
