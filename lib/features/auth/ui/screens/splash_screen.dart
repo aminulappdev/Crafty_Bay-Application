@@ -1,4 +1,3 @@
-import 'package:crafty_bay/features/auth/ui/screens/complete_profile_screen.dart';
 import 'package:crafty_bay/features/common/ui/screen/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/features/common/ui/widget/app_logo_widget.dart';
 import 'package:flutter/material.dart';

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class ProductImageCarouselSlider extends StatefulWidget {
   const ProductImageCarouselSlider({
-    super.key,
+    super.key, required this.imagesUrls,
   });
+
+ final List<String> imagesUrls;
 
   @override
   State<ProductImageCarouselSlider> createState() => _ProductImageCarouselSliderState();
@@ -22,23 +24,18 @@ class _ProductImageCarouselSliderState extends State<ProductImageCarouselSlider>
           options: CarouselOptions(height: 220.0, viewportFraction: 0.95, onPageChanged: (currentIndex, reason) {
             _selectedIndex.value = currentIndex;
           },),
-          items: [1, 2, 3, 4, 5].map(
+          items: widget.imagesUrls.map(
             (i) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.symmetric(horizontal: 0),
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 184, 196, 196),
+                      decoration:  BoxDecoration(
+                        image: DecorationImage(image: NetworkImage(i),fit: BoxFit.fill),
+                          color: const Color.fromARGB(255, 184, 196, 196),
                        ),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'text $i',
-                          style: const TextStyle(fontSize: 16.0),
-                        ),
-                      ));
+                      );
                 },
               );
             },
@@ -54,7 +51,7 @@ class _ProductImageCarouselSliderState extends State<ProductImageCarouselSlider>
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for(int i = 0; i<5; i++) 
+                for(int i = 0; i<widget.imagesUrls.length; i++) 
                 Container(
                   width: 16,
                   height: 16,
