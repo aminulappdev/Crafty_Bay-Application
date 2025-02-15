@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:crafty_bay/app/app_colors.dart';
 import 'package:crafty_bay/app/app_constants.dart';
 import 'package:crafty_bay/features/auth/ui/controller/otp_verification_controller.dart';
-import 'package:crafty_bay/features/auth/ui/screens/complete_profile_screen.dart';
+import 'package:crafty_bay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay/features/common/ui/screen/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/features/common/ui/widget/app_logo_widget.dart';
 import 'package:crafty_bay/features/common/ui/widget/snack_bar_message.dart';
@@ -173,7 +173,7 @@ class _OtpVarificationScreenState extends State<OtpVarificationScreen> {
     if (isSuccess) {
       if (otpVerificationController.shouldNavigateCompleteProfile!) {
         if (mounted) {
-          Navigator.pushNamed(context, CompleteProfileScreen.name);
+          Navigator.pushNamed(context, SignUpScreen.name);
         }
       } else {
         if (mounted) {

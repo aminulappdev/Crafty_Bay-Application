@@ -1,27 +1,28 @@
-import 'package:crafty_bay/features/auth/ui/controller/email_verification_controller.dart';
-import 'package:crafty_bay/features/auth/ui/screens/otp_varification_screen.dart';
+import 'package:crafty_bay/features/auth/ui/controller/sign_in_controller.dart';
+import 'package:crafty_bay/features/common/ui/screen/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/features/common/ui/widget/app_logo_widget.dart';
 import 'package:crafty_bay/features/common/ui/widget/snack_bar_message.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EmailVarificationScreen extends StatefulWidget {
-  const EmailVarificationScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
-  static const String name = '/email-varification';
+  static const String name = '/sign-in';
 
   @override
-  State<EmailVarificationScreen> createState() =>
-      _EmailVarificationScreenState();
+  State<SignInScreen> createState() =>
+      _SignInScreenState();
 }
 
-class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailCtrl = TextEditingController();
+  final TextEditingController passwordCtrl = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  EmailVerificationController emailVerificationController =
-      Get.find<EmailVerificationController>();
+  SignINController signInController =
+      Get.find<SignINController>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,7 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       controller: emailCtrl,
+                      textInputAction: TextInputAction.next,
                       validator: (String? value) {
                         if (value?.trim().isEmpty ?? true) {
                           return "Enter your email address";
@@ -77,13 +79,27 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
                       },
                       decoration: const InputDecoration(hintText: 'Email Address'),
                     ),
+                    const SizedBox(height: 16,),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.emailAddress,
+                      obscureText: true,
+                      controller: passwordCtrl,
+                      validator: (String? value) {
+                        if (value?.isEmpty ?? true) {
+                          return "Enter your password";
+                        }                    
+                        return null;
+                      },
+                      decoration: const InputDecoration(hintText: 'Password'),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(
                 height: 24,
               ),
-              GetBuilder<EmailVerificationController>(builder: (controller) {
+              GetBuilder<SignINController>(builder: (controller) {
                 if (controller.inProgress) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -103,15 +119,14 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
   void _onTapToNextButton() async {
     if (_formKey.currentState!.validate()) {
     bool isSuccess =
-        await emailVerificationController.verifyEmail(emailCtrl.text.trim());
+        await signInController.signIn(emailCtrl.text,passwordCtrl.text );
     if (isSuccess) {
       if (mounted) {
-        Navigator.pushNamed(context, OtpVarificationScreen.name,
-            arguments: emailCtrl.text);
+        Navigator.pushNamed(context, MainBottomNavScreen.name);
       }
     } else {
       if (mounted) {
-        showSnackbarMessage(context, emailVerificationController.errorMessage!);
+        showSnackbarMessage(context, signInController.errorMessage!);
       }
     }
      }

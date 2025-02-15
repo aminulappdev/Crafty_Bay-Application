@@ -61,7 +61,7 @@ class NetworkCaller {
       _logRequest(url, headers, body);
       var response = await post(uri, headers: headers, body: jsonEncode(body));
       _logResponse(url, response.statusCode, response.headers, response.body);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 200) {
         final debugMessage = jsonDecode(response.body);
         return NetworkResponse(
           isSuccess: true,

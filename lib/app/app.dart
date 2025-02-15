@@ -1,8 +1,8 @@
 import 'package:crafty_bay/app/app_theme_data.dart';
 import 'package:crafty_bay/app/controller_binder.dart';
 import 'package:crafty_bay/features/Categories/ui/screens/category_list_screen.dart';
-import 'package:crafty_bay/features/auth/ui/screens/complete_profile_screen.dart';
-import 'package:crafty_bay/features/auth/ui/screens/email_varification_screen.dart';
+import 'package:crafty_bay/features/auth/ui/screens/sign_up_screen.dart';
+import 'package:crafty_bay/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay/features/auth/ui/screens/otp_varification_screen.dart';
 import 'package:crafty_bay/features/auth/ui/screens/splash_screen.dart';
 import 'package:crafty_bay/features/common/ui/screen/main_bottom_nav_screen.dart';
@@ -22,13 +22,13 @@ class CraftyBay extends StatelessWidget {
 
         if (settings.name == SplashScreen.name) {
           widget = const SplashScreen();
-        } else if (settings.name == EmailVarificationScreen.name) {
-          widget = const EmailVarificationScreen();
+        } else if (settings.name == SignInScreen.name) {
+          widget = const SignInScreen();
         } else if (settings.name == OtpVarificationScreen.name) {
           String email = settings.arguments as String;
           widget = OtpVarificationScreen(email: email);
-        } else if (settings.name == CompleteProfileScreen.name) {
-          widget = const CompleteProfileScreen();
+        } else if (settings.name == SignUpScreen.name) {
+          widget = const SignUpScreen();
         } else if (settings.name == MainBottomNavScreen.name) {
           widget = const MainBottomNavScreen();
         } else if (settings.name == CategoryListScreen.name) {
