@@ -2,7 +2,6 @@ import 'package:crafty_bay/Services/network_caller/network_caller.dart';
 import 'package:crafty_bay/features/auth/ui/controller/sign_up_controller.dart';
 import 'package:crafty_bay/features/auth/ui/controller/sign_in_controller.dart';
 import 'package:crafty_bay/features/auth/ui/controller/otp_verification_controller.dart';
-import 'package:crafty_bay/features/auth/ui/controller/read_profile_controller.dart';
 import 'package:crafty_bay/features/common/data/controllers/auth_controller.dart';
 import 'package:crafty_bay/features/common/ui/controllers/category_list_controller.dart';
 import 'package:crafty_bay/features/common/ui/controllers/main_bottom_nav_controller.dart';
@@ -21,7 +20,6 @@ class ControllerBinder extends Bindings {
     Get.put(NetworkCaller());
     Get.put(SignINController());
     Get.put(OTPVerificationController());
-    Get.put(ReadProfileController());
     Get.put(AuthController());
     Get.put(SignUpController());
     Get.put(HomeBannerListController());

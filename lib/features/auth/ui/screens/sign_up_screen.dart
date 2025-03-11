@@ -78,16 +78,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 24,
               ),
-              GetBuilder<SignUpController>(
-                builder: (controller) {
-                  return Visibility(
-                    visible: controller.inprogress == false,
-                    replacement: const Center(child: CircularProgressIndicator()),
-                    child: ElevatedButton(
-                        onPressed: _onTapToNextButton, child: const Text('Sign Up')),
-                  );
-                }
-              )
+              GetBuilder<SignUpController>(builder: (controller) {
+                return Visibility(
+                  visible: controller.inprogress == false,
+                  replacement: const Center(child: CircularProgressIndicator()),
+                  child: ElevatedButton(
+                      onPressed: _onTapToNextButton,
+                      child: const Text('Sign Up')),
+                );
+              })
             ],
           ),
         ),
@@ -205,8 +204,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _onTapToNextButton() async {
     if (_formKey.currentState!.validate()) {
-      SignUpParams signUpParams = SignUpParams(passwordCtrl.text,
+      SignUpParams signUpParams = SignUpParams(
           email: emailCtrl.text.trim(),
+          password: passwordCtrl.text,
           firstName: firstNameCtrl.text.trim(),
           lastName: lastNameCtrl.text.trim(),
           mobile: mobileCtrl.text.trim(),
@@ -215,9 +215,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       bool isSuccess = await signUpController.signUp(signUpParams);
       if (isSuccess) {
         if (mounted) {
+          Navigator.pushNamed(context, OtpVarificationScreen.name,
+              arguments: emailCtrl.text);
+
           clearText();
-          Navigator.pushNamed(
-              context, OtpVarificationScreen.name ,arguments: emailCtrl.text);
           showSnackbarMessage(context, 'Success');
         }
       } else {

@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:crafty_bay/Services/network_caller/network_response.dart';
+import 'package:crafty_bay/features/common/data/models/error_response_model.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
-
-
 
 class NetworkCaller {
   final Logger _logger = Logger();
@@ -15,17 +14,15 @@ class NetworkCaller {
 
       Map<String, String> headers = {
         'content-type': 'application-json',
-
       };
 
-      if(accesToken != null)
-      {
-         headers['token'] = accesToken;
+      if (accesToken != null) {
+        headers['token'] = accesToken;
       }
 
       var response = await get(uri, headers: headers);
       _logResponse(url, response.statusCode, response.headers, response.body);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final debugMessage = jsonDecode(response.body);
         return NetworkResponse(
           isSuccess: true,
@@ -43,25 +40,23 @@ class NetworkCaller {
     }
   }
 
-  Future<NetworkResponse> postRequest(
-      String url, Map<String, dynamic>? body, {String? accesToken}) async {
+  Future<NetworkResponse> postRequest(String url, Map<String, dynamic>? body,
+      {String? accesToken}) async {
     try {
       Uri uri = Uri.parse(url);
 
-      Map<String, String> headers = { 
+      Map<String, String> headers = {
         'content-type': 'application/json',
-        
       };
 
-      if(accesToken != null)
-      {
-         headers['token'] = accesToken;
+      if (accesToken != null) {
+        headers['token'] = accesToken;
       }
 
       _logRequest(url, headers, body);
       var response = await post(uri, headers: headers, body: jsonEncode(body));
       _logResponse(url, response.statusCode, response.headers, response.body);
-      if (response.statusCode == 200 || response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final debugMessage = jsonDecode(response.body);
         return NetworkResponse(
           isSuccess: true,
@@ -69,8 +64,13 @@ class NetworkCaller {
           responseData: debugMessage,
         );
       } else {
+        final debugMessage = jsonDecode(response.body);
+        ErrorResponseModel errorResponseModel =
+            ErrorResponseModel.fromJson(debugMessage);
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode);
+            isSuccess: false,
+            statusCode: response.statusCode,
+            errorMessage: errorResponseModel.msg);
       }
     } catch (e) {
       _logResponse(url, -1, null, '', e.toString());

@@ -6,9 +6,10 @@ class SignUpParams {
   final String city;
   final String password;
 
-  SignUpParams(
-    this.password, {
+  SignUpParams({
+    
     required this.email,
+    required this.password,
     required this.firstName,
     required this.lastName,
     required this.mobile,

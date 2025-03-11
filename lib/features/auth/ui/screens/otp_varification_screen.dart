@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:crafty_bay/app/app_colors.dart';
 import 'package:crafty_bay/app/app_constants.dart';
 import 'package:crafty_bay/features/auth/ui/controller/otp_verification_controller.dart';
-import 'package:crafty_bay/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay/features/common/ui/screen/main_bottom_nav_screen.dart';
 import 'package:crafty_bay/features/common/ui/widget/app_logo_widget.dart';
 import 'package:crafty_bay/features/common/ui/widget/snack_bar_message.dart';
@@ -92,7 +91,7 @@ class _OtpVarificationScreenState extends State<OtpVarificationScreen> {
                 child: Column(
                   children: [
                     PinCodeTextField(
-                      length: 6,
+                      length: 4,
                       obscureText: false,
                       animationType: AnimationType.fade,
                       animationDuration: const Duration(milliseconds: 300),
@@ -168,24 +167,17 @@ class _OtpVarificationScreenState extends State<OtpVarificationScreen> {
 
   Future<void> _onTapToNextButton() async {
     if (_formKey.currentState!.validate()) {
-    bool isSuccess =
-        await otpVerificationController.verifyOTP(widget.email, otpCtrl.text);
-    if (isSuccess) {
-      if (otpVerificationController.shouldNavigateCompleteProfile!) {
+      bool isSuccess =
+          await otpVerificationController.verifyOTP(widget.email, otpCtrl.text);
+      if (isSuccess) {
         if (mounted) {
-          Navigator.pushNamed(context, SignUpScreen.name);
+          Navigator.pushNamed(context, MainBottomNavScreen.name);
         }
       } else {
         if (mounted) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, MainBottomNavScreen.name, (predicate) => false);
+          showSnackbarMessage(context, otpVerificationController.errorMessage!);
         }
       }
-    } else {
-      if (mounted) {
-        showSnackbarMessage(context, otpVerificationController.errorMessage!);
-      }
-    }
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:crafty_bay/Services/network_caller/network_caller.dart';
 import 'package:crafty_bay/Services/network_caller/network_response.dart';
 import 'package:crafty_bay/app/urls.dart';
-import 'package:crafty_bay/features/auth/ui/controller/read_profile_controller.dart';
+import 'package:crafty_bay/features/auth/data/models/auth_success_model.dart';
 import 'package:crafty_bay/features/common/data/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,11 +12,6 @@ class OTPVerificationController extends GetxController {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  bool? _shouldNavigateCompleteProfile = false;
-  bool? get shouldNavigateCompleteProfile => _shouldNavigateCompleteProfile;
-
-  String? _token;
-  String? get token => _token;
 
   Future<bool> verifyOTP(String email, String otp) async {
     bool isSuccess = false;
@@ -24,24 +19,17 @@ class OTPVerificationController extends GetxController {
     _inProgress = true;
 
     update();
-    
-    final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(Urls.otpVerify(email, otp));
+
+    final Map<String, dynamic> requestParams = {"email": email, "otp": otp};
+
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .postRequest(Urls.otpVerify, requestParams);
 
     if (response.isSuccess) {
+      AuthSuccessModel authSuccessModel = AuthSuccessModel.fromJson(response.responseData);
+      await AuthController.saveUserData(
+          authSuccessModel.data!.token!, authSuccessModel.data!.user!);
       _errorMessage = null;
-
-      String token = response.responseData['data'];
-      await Get.find<ReadProfileController>().readProfileData(token);
-
-      if (Get.find<ReadProfileController>().profileModel == null) {
-        _token = response.responseData['data'];
-        _shouldNavigateCompleteProfile = true;
-      } else {
-        // await AuthController.saveUserData(
-        //     token, Get.find<ReadProfileController>().profileModel!);
-        _shouldNavigateCompleteProfile = false;
-      }
 
       isSuccess = true;
     } else {
