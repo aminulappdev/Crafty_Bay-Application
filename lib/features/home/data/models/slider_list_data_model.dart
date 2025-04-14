@@ -4,8 +4,8 @@ import 'package:crafty_bay/features/home/data/models/slider_model.dart';
 class SliderListDataModel {
   List<SliderModel>? results;
   int? total;
-  Null? firstPage;
-  Null? previous;
+  Null firstPage;
+  Null previous;
   int? next;
   int? lastPage;
 
@@ -21,7 +21,7 @@ class SliderListDataModel {
     if (json['results'] != null) {
       results = <SliderModel>[];
       json['results'].forEach((v) {
-        results!.add(new SliderModel.fromJson(v));
+        results!.add(SliderModel.fromJson(v));
       });
     }
     total = json['total'];
@@ -32,15 +32,15 @@ class SliderListDataModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.results != null) {
-      data['results'] = this.results!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (results != null) {
+      data['results'] = results!.map((v) => v.toJson()).toList();
     }
-    data['total'] = this.total;
-    data['first_page'] = this.firstPage;
-    data['previous'] = this.previous;
-    data['next'] = this.next;
-    data['last_page'] = this.lastPage;
+    data['total'] = total;
+    data['first_page'] = firstPage;
+    data['previous'] = previous;
+    data['next'] = next;
+    data['last_page'] = lastPage;
     return data;
   }
 }

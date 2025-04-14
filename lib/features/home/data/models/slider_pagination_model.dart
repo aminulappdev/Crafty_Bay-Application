@@ -1,4 +1,5 @@
-import 'package:crafty_bay/features/home/data/models/slider_model.dart';
+import 'package:crafty_bay/features/home/data/models/slider_list_data_model.dart';
+
 
 class SliderPaginationModel {
   int? code;
@@ -12,14 +13,14 @@ class SliderPaginationModel {
     code = json['code'];
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ? new SliderListDataModel.fromJson(json['data']) : null;
+    data = json['data'] != null ? SliderListDataModel.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
-    data['msg'] = this.msg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['status'] = status;
+    data['msg'] = msg;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }

@@ -31,15 +31,15 @@ class BannerModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['short_des'] = this.shortDes;
-    data['price'] = this.price;
-    data['image'] = this.image;
-    data['product_id'] = this.productId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['short_des'] = shortDes;
+    data['price'] = price;
+    data['image'] = image;
+    data['product_id'] = productId;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

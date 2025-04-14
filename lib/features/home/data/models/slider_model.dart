@@ -5,7 +5,7 @@ class SliderModel {
   String? description;
   String? product;
   String? brand;
-  Null? category;
+  Null category;
   String? createdAt;
   String? updatedAt;
   int? iV;
@@ -34,16 +34,16 @@ class SliderModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['photo_url'] = this.photoUrl;
-    data['description'] = this.description;
-    data['product'] = this.product;
-    data['brand'] = this.brand;
-    data['category'] = this.category;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['photo_url'] = photoUrl;
+    data['description'] = description;
+    data['product'] = product;
+    data['brand'] = brand;
+    data['category'] = category;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }
