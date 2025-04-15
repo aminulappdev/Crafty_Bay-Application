@@ -13,3 +13,4 @@ class ErrorResponseModel {
         msg: json['msg'] ?? 'Something went wrong');
   }
 }
+ 
